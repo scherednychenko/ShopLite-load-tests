@@ -148,6 +148,41 @@ The test plan uses placeholder paths:
 
 Replace them with real paths once Swagger/Postman is available. Correlation placeholders exist for `cartId` and `orderId`.
 
+## Demo run against a local mock backend
+Because the endpoints are placeholders, the repo ships a tiny dependency-free mock
+backend so you can produce a realistic (green) run and see the reporting artifacts
+without a real environment.
+
+> The mock is a **demonstration aid only**. The latencies it produces are not
+> representative of any real system — they only show what the reporting output looks like.
+
+```bash
+# 1) start the mock (separate terminal), serves the 3 placeholder endpoints
+python3 mock/mock_server.py 8080
+
+# 2) run the sanity profile against it, from the repo root
+jmeter -n \
+  -t jmeter/test-plans/ShopLite_Scenarios.jmx \
+  -q jmeter/config/load_sanity.properties \
+  -Jprotocol=http -Jhost=localhost -Jport=8080 \
+  -l jmeter/results/demo_sanity.jtl \
+  -e -o jmeter/results/report_demo_sanity
+
+# 3) open jmeter/results/report_demo_sanity/index.html
+```
+
+Example dashboard from such a run (10 threads, 60s, cart size 10):
+
+![JMeter HTML dashboard — sample demo run](docs/img/sample_report_dashboard.png)
+
+| Transaction | Samples | Error % | Avg (ms) | p95 (ms) | p99 (ms) | TPS |
+|---|---:|---:|---:|---:|---:|---:|
+| TX_Browse_Catalog | 335 | 0.00% | 3 | 5 | 13 | 5.7 |
+| TX_Add_To_Cart | 10 | 0.00% | 24 | 32 | 32 | 2.9 |
+| TX_Checkout_PlaceOrder | 333 | 0.00% | 5 | 3 | 7 | 6.5 |
+| **Total** | **779** | **0.00%** | 6 | 4 | 14 | 13.0 |
+
 ## Notes
 - The plan is designed for **API-level** measurement. UI is used only to define journeys, not to measure UI performance.
 - Keep listeners disabled in non-GUI runs; use HTML report generation (`-e -o`).
+- The `TX_Add_To_Cart` transaction wraps a loop of `cartSize` add-item requests (each with its own think time), so it issues `cartSize`× more HTTP samples and takes several seconds to complete. Under a fixed-duration run, many of its instances are still in flight when the scheduler stops the threads and are therefore not recorded — which is why its completed-transaction count is much lower than the single-request browse/checkout transactions. Use a loop-count (iteration-based) run if you need an equal number of completed transactions per journey step.
