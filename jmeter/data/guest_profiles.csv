@@ -1,0 +1,11 @@
+email,firstName,lastName,phone,country,city,addressLine1,zip
+qa.seed1@example.com,Perf,Guest,+10000000001,HR,Zagreb,Perf Street 1,10000
+qa.seed2@example.com,Perf,Guest,+10000000002,HR,Zagreb,Perf Street 2,10000
+qa.seed3@example.com,Perf,Guest,+10000000003,HR,Zagreb,Perf Street 3,10000
+qa.seed4@example.com,Perf,Guest,+10000000004,HR,Zagreb,Perf Street 4,10000
+qa.seed5@example.com,Perf,Guest,+10000000005,HR,Zagreb,Perf Street 5,10000
+qa.seed6@example.com,Perf,Guest,+10000000006,HR,Zagreb,Perf Street 6,10000
+qa.seed7@example.com,Perf,Guest,+10000000007,HR,Zagreb,Perf Street 7,10000
+qa.seed8@example.com,Perf,Guest,+10000000008,HR,Zagreb,Perf Street 8,10000
+qa.seed9@example.com,Perf,Guest,+10000000009,HR,Zagreb,Perf Street 9,10000
+qa.seed10@example.com,Perf,Guest,+100000000010,HR,Zagreb,Perf Street 10,10000
