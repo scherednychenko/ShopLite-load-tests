@@ -182,6 +182,24 @@ Example dashboard from such a run (10 threads, 60s, cart size 10):
 | TX_Checkout_PlaceOrder | 333 | 0.00% | 5 | 3 | 7 | 6.5 |
 | **Total** | **779** | **0.00%** | 6 | 4 | 14 | 13.0 |
 
+## Run everything in Docker (one command)
+No local JMeter/Java install needed — Docker builds a JMeter image (with the
+Random CSV Data Set plugin baked in) and runs it against the mock backend:
+
+```bash
+docker compose up --build
+```
+
+This starts the mock, waits until it is healthy, runs the sanity profile against
+it, and writes the JTL + HTML report to `jmeter/results/` on the host. When it
+finishes, open `jmeter/results/report_demo_sanity/index.html`.
+
+Services:
+- `mock` — the Python mock backend (`mock/Dockerfile`)
+- `jmeter` — Apache JMeter 5.5 + Random CSV plugin (`jmeter/Dockerfile`), runs the test plan against `http://mock:8080`
+
+Same caveat as the local demo run: the mock's latencies are illustrative only.
+
 ## Notes
 - The plan is designed for **API-level** measurement. UI is used only to define journeys, not to measure UI performance.
 - Keep listeners disabled in non-GUI runs; use HTML report generation (`-e -o`).

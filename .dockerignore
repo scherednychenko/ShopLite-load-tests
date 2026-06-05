@@ -1,0 +1,10 @@
+.git
+.gitignore
+jmeter/results
+*.jtl
+*.log
+docs
+old_artefacts
+**/.DS_Store
+README.md
+LICENSE

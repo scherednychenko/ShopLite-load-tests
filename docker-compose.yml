@@ -1,0 +1,40 @@
+# One-command demo: mock backend + JMeter run + HTML report.
+#
+#   docker compose up --build
+#
+# JMeter waits for the mock to be healthy, runs the sanity profile against it,
+# and writes the JTL + HTML report to ./jmeter/results/ on the host.
+# Open jmeter/results/report_demo_sanity/index.html when it finishes.
+services:
+  mock:
+    build: ./mock
+    image: shoplite-mock
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/api/catalog')"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  jmeter:
+    build:
+      context: .
+      dockerfile: jmeter/Dockerfile
+    image: shoplite-jmeter
+    depends_on:
+      mock:
+        condition: service_healthy
+    volumes:
+      - ./jmeter/results:/test/jmeter/results
+    # Override the image entrypoint so we can clean previous output first
+    # (JMeter's -e -o requires an empty/absent report folder).
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >
+        rm -rf jmeter/results/report_demo_sanity jmeter/results/demo_sanity.jtl;
+        jmeter -n
+        -t jmeter/test-plans/ShopLite_Scenarios.jmx
+        -q jmeter/config/load_sanity.properties
+        -Jprotocol=http -Jhost=mock -Jport=8080
+        -Jthreads=10 -JrampUpSec=5 -JdurationSec=60
+        -l jmeter/results/demo_sanity.jtl
+        -e -o jmeter/results/report_demo_sanity
