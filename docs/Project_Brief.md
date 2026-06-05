@@ -73,14 +73,14 @@ The application consists of:
 
 ## 5. Team Voice (fictional stakeholders)
 
-> **Anna Kowalska – Product Owner**
+> **Product Owner**
 > "I'd like to know if new features are slowing down the app. But we can't delay releases by a week just to test."
 
-> **Marek Nowak – DevOps Engineer**
+> **DevOps Engineer**
 > "We have one server in the test environment. Only PreProd can scale.
 > I'd like the test plan to account for these differences."
 
-> **Ewa Zielińska – Functional Tester**
+> **Functional Tester**
 > "Sometimes checkout is slower, but I don't know how to measure it.
 > I'd like to have a simple way to see whether the next version is improving or worsening."
 
