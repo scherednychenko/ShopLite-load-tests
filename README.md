@@ -204,3 +204,16 @@ Same caveat as the local demo run: the mock's latencies are illustrative only.
 - The plan is designed for **API-level** measurement. UI is used only to define journeys, not to measure UI performance.
 - Keep listeners disabled in non-GUI runs; use HTML report generation (`-e -o`).
 - The `TX_Add_To_Cart` transaction wraps a loop of `cartSize` add-item requests (each with its own think time), so it issues `cartSize`× more HTTP samples and takes several seconds to complete. Under a fixed-duration run, many of its instances are still in flight when the scheduler stops the threads and are therefore not recorded — which is why its completed-transaction count is much lower than the single-request browse/checkout transactions. Use a loop-count (iteration-based) run if you need an equal number of completed transactions per journey step.
+
+## One scenario, five tools
+
+The same ShopLite journey (browse → add-to-cart → checkout) is implemented across five
+load-testing tools — each as a one-command Dockerized demo with an HTML report:
+
+| Tool | Language / DSL | SLOs as | Report | Repo |
+|---|---|---|---|---|
+| Apache JMeter | XML + Groovy | Assertions | HTML dashboard | [ShopLite-load-tests](https://github.com/scherednychenko/ShopLite-load-tests) |
+| Grafana k6 | JavaScript | Thresholds | HTML report | [ShopLite-load-tests-k6](https://github.com/scherednychenko/ShopLite-load-tests-k6) |
+| Locust | Python | Code-level checks | Built-in HTML | [ShopLite-load-tests-locust](https://github.com/scherednychenko/ShopLite-load-tests-locust) |
+| Gatling | Scala DSL | Assertions | HTML charts | [ShopLite-load-tests-gatling-scala](https://github.com/scherednychenko/ShopLite-load-tests-gatling-scala) |
+| Gatling | Java DSL | Assertions | HTML charts | [ShopLite-load-tests-gatling-javaDSL](https://github.com/scherednychenko/ShopLite-load-tests-gatling-javaDSL) |
