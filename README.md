@@ -4,6 +4,8 @@ This package provides a maintainable **starter skeleton** for performance testin
 
 It is intentionally **endpoint/payload-agnostic** (placeholders), because no Swagger/Postman examples were provided. Once an API contract is available, we could replace paths, payloads, and correlation rules without changing the overall structure.
 
+> 💡 **The script is the easy part.** The real value is knowing *what* to test, shaping the load model, reading the results, and turning them into a go/no-go call — judgment a demo can't capture.
+
 ## Contents
 - `jmeter/test-plans/ShopLite_Scenarios.jmx` — main test plan (ready to run; uses placeholder endpoints)
 - `jmeter/test-plans/ShopLite_Base.jmx` — base components template (for reuse/copy)
