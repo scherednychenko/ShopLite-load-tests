@@ -9,6 +9,7 @@ It is intentionally **endpoint/payload-agnostic** (placeholders), because no Swa
 > **Note.** This is a personal portfolio project — a from-scratch reconstruction
 > built entirely on public, open-source tools against a fictional storefront. It is
 > not affiliated with, and contains no material from, any employer or client.
+
 ## Contents
 - `jmeter/test-plans/ShopLite_Scenarios.jmx` — main test plan (ready to run; uses placeholder endpoints)
 - `jmeter/test-plans/ShopLite_Base.jmx` — base components template (for reuse/copy)
