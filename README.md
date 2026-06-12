@@ -6,6 +6,9 @@ It is intentionally **endpoint/payload-agnostic** (placeholders), because no Swa
 
 > 💡 **The script is the easy part.** The real value is knowing *what* to test, shaping the load model, reading the results, and turning them into a go/no-go call — judgment a demo can't capture.
 
+> **Note.** This is a personal portfolio project — a from-scratch reconstruction
+> built entirely on public, open-source tools against a fictional storefront. It is
+> not affiliated with, and contains no material from, any employer or client.
 ## Contents
 - `jmeter/test-plans/ShopLite_Scenarios.jmx` — main test plan (ready to run; uses placeholder endpoints)
 - `jmeter/test-plans/ShopLite_Base.jmx` — base components template (for reuse/copy)
