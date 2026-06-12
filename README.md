@@ -207,6 +207,17 @@ Same caveat as the local demo run: the mock's latencies are illustrative only.
 - Keep listeners disabled in non-GUI runs; use HTML report generation (`-e -o`).
 - The `TX_Add_To_Cart` transaction wraps a loop of `cartSize` add-item requests (each with its own think time), so it issues `cartSize`× more HTTP samples and takes several seconds to complete. Under a fixed-duration run, many of its instances are still in flight when the scheduler stops the threads and are therefore not recorded — which is why its completed-transaction count is much lower than the single-request browse/checkout transactions. Use a loop-count (iteration-based) run if you need an equal number of completed transactions per journey step.
 
+## Live metrics in Grafana
+
+The test plan ships a **Backend Listener** (`InfluxdbBackendListenerClient`), disabled by
+default so non-GUI runs stay clean. Enable it and point it at the
+**[ShopLite-observability](https://github.com/scherednychenko/ShopLite-observability)**
+stack (`docker compose up` → InfluxDB 1.8 + Grafana) to stream per-transaction metrics
+*live* during a run — throughput, error rate, response-time percentiles, active threads,
+and a drill-down per transaction:
+
+![JMeter metrics live in Grafana](docs/img/grafana_live_dashboard.png)
+
 ## One scenario, five tools
 
 The same ShopLite journey (browse → add-to-cart → checkout) is implemented across five
